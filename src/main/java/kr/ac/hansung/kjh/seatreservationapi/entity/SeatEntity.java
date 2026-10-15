@@ -12,9 +12,11 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
 @Table(name = "seats", uniqueConstraints = @UniqueConstraint(name = "uk_seat", columnNames = {
     "facility_id", "row_label", "column_no"}))
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

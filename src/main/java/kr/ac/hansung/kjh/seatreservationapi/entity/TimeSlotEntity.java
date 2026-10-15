@@ -12,9 +12,11 @@ import kr.ac.hansung.kjh.seatreservationapi.exception.CustomException;
 import kr.ac.hansung.kjh.seatreservationapi.exception.ErrorCode;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
 @Table(name = "time_slots")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class TimeSlotEntity {

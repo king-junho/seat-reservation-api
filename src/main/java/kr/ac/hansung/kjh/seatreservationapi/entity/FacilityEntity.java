@@ -1,46 +1,52 @@
 package kr.ac.hansung.kjh.seatreservationapi.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
 @Table(name = "facilities")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FacilityEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @NotBlank
-    @Column(nullable = false)
-    private String name;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Region region;
+  @NotBlank
+  @Column(nullable = false)
+  private String name;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "facility_type", nullable = false)
-    private FacilityType type;
+  @NotNull
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
+  private Region region;
 
-    @Builder
-    private FacilityEntity(String name, Region region, FacilityType type) {
-        this.name = name;
-        this.region = region;
-        this.type = type;
-    }
+  @NotNull
+  @Enumerated(EnumType.STRING)
+  @Column(name = "facility_type", nullable = false)
+  private FacilityType type;
 
-    public static FacilityEntity create(String name, Region region, FacilityType type) {
-        return FacilityEntity.builder()
-                .name(name)
-                .region(region)
-                .type(type)
-                .build();
-    }
+  @Builder
+  private FacilityEntity(String name, Region region, FacilityType type) {
+    this.name = name;
+    this.region = region;
+    this.type = type;
+  }
+
+  public static FacilityEntity create(String name, Region region, FacilityType type) {
+    return FacilityEntity.builder().name(name).region(region).type(type).build();
+  }
 }

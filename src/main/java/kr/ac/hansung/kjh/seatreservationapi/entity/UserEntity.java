@@ -6,37 +6,38 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "users")
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserEntity {
-    @Id
-    @Email
-    @NotBlank
-    private String email;
 
-    @NotBlank
-    @Column(nullable = false)
-    private String password;
+  @Id
+  @Email
+  @NotBlank
+  private String email;
 
-    @NotBlank
-    @Column(nullable = false)
-    private String name;
+  @NotBlank
+  @Column(nullable = false)
+  private String password;
 
-    @Builder
-    private UserEntity(String email, String password, String name) {
-        this.email = email;
-        this.password = password;
-        this.name = name;
-    }
+  @NotBlank
+  @Column(nullable = false)
+  private String name;
 
-    public static UserEntity createUser(String email, String password, String name) {
-        return UserEntity.builder()
-                .email(email)
-                .password(password)
-                .name(name)
-                .build();
-    }
+  @Builder
+  private UserEntity(String email, String password, String name) {
+    this.email = email;
+    this.password = password;
+    this.name = name;
+  }
+
+  public static UserEntity createUser(String email, String password, String name) {
+    return UserEntity.builder().email(email).password(password).name(name).build();
+  }
 }

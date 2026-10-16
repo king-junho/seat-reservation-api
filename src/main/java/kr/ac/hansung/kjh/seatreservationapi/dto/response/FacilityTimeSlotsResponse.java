@@ -1,7 +1,6 @@
 package kr.ac.hansung.kjh.seatreservationapi.dto.response;
 
 import java.util.List;
-import kr.ac.hansung.kjh.seatreservationapi.entity.TimeSlotEntity;
 import org.springframework.data.domain.Page;
 
 public record FacilityTimeSlotsResponse(
@@ -12,11 +11,9 @@ public record FacilityTimeSlotsResponse(
     int totalPages
 ) {
 
-  public static FacilityTimeSlotsResponse from(Page<TimeSlotEntity> result) {
-    List<TimeSlotResponse> content = result.getContent().stream().map(TimeSlotResponse::from)
-        .toList();
-
-    return new FacilityTimeSlotsResponse(content, result.getNumber(), result.getSize(),
+  public static FacilityTimeSlotsResponse from(Page<TimeSlotResponse> result) {
+    
+    return new FacilityTimeSlotsResponse(result.getContent(), result.getNumber(), result.getSize(),
         result.getTotalElements(), result.getTotalPages());
   }
 }

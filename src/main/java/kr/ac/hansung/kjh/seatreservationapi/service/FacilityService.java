@@ -5,11 +5,11 @@ import java.time.LocalDateTime;
 import kr.ac.hansung.kjh.seatreservationapi.dto.response.FacilitySearchResponse;
 import kr.ac.hansung.kjh.seatreservationapi.dto.response.FacilitySeatsResponse;
 import kr.ac.hansung.kjh.seatreservationapi.dto.response.FacilityTimeSlotsResponse;
+import kr.ac.hansung.kjh.seatreservationapi.dto.response.TimeSlotResponse;
 import kr.ac.hansung.kjh.seatreservationapi.entity.FacilityEntity;
 import kr.ac.hansung.kjh.seatreservationapi.entity.FacilityType;
 import kr.ac.hansung.kjh.seatreservationapi.entity.Region;
 import kr.ac.hansung.kjh.seatreservationapi.entity.SeatEntity;
-import kr.ac.hansung.kjh.seatreservationapi.entity.TimeSlotEntity;
 import kr.ac.hansung.kjh.seatreservationapi.repository.FacilityRepository;
 import kr.ac.hansung.kjh.seatreservationapi.repository.SeatRepository;
 import kr.ac.hansung.kjh.seatreservationapi.repository.TimeSlotRepository;
@@ -47,17 +47,14 @@ public class FacilityService {
   public FacilityTimeSlotsResponse findFacilityTimeSlots(Long facilityId, LocalDate date,
       int currentPage) {
     Pageable pageable = PageRequest.of(currentPage, PAGE_SIZE,
-        Sort.by(Direction.ASC, "startTime"));
+        Sort.by(Direction.ASC, "startTime", "id"));
 
     LocalDateTime from = date.atStartOfDay();
     LocalDateTime to = date.plusDays(1).atStartOfDay();
 
-    Page<TimeSlotEntity> result = timeSlotRepository.findByFacilityIdAndStartTimeGreaterThanEqualAndStartTimeLessThan(
-        facilityId,
-        from, to, pageable);
-
-    //int totalSeats = timeSlotSeatRepository.countBy
-    //int availableSeats =
+    Page<TimeSlotResponse> result = timeSlotRepository.findByFacilityIdAndLocalDate(
+        facilityId, from, to, pageable
+    );
 
     return FacilityTimeSlotsResponse.from(result);
   }

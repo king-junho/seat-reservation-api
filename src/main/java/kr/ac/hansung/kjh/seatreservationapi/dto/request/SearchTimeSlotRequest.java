@@ -14,5 +14,4 @@ public record SearchTimeSlotRequest(
       currentPage = 0;
     }
   }
-
 }

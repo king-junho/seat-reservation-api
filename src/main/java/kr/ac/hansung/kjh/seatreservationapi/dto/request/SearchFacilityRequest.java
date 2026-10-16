@@ -10,7 +10,7 @@ public record SearchFacilityRequest(
     Region region,
 
     FacilityType type,
-    
+
     Integer currentPage
 ) {
 

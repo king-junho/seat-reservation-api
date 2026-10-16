@@ -5,15 +5,15 @@ import java.time.LocalDateTime;
 import kr.ac.hansung.kjh.seatreservationapi.dto.response.FacilitySearchResponse;
 import kr.ac.hansung.kjh.seatreservationapi.dto.response.FacilitySeatsResponse;
 import kr.ac.hansung.kjh.seatreservationapi.dto.response.FacilityTimeSlotsResponse;
-import kr.ac.hansung.kjh.seatreservationapi.dto.response.TimeSlotResponse;
 import kr.ac.hansung.kjh.seatreservationapi.entity.FacilityEntity;
 import kr.ac.hansung.kjh.seatreservationapi.entity.FacilityType;
 import kr.ac.hansung.kjh.seatreservationapi.entity.Region;
-import kr.ac.hansung.kjh.seatreservationapi.entity.SeatEntity;
 import kr.ac.hansung.kjh.seatreservationapi.repository.FacilityRepository;
 import kr.ac.hansung.kjh.seatreservationapi.repository.SeatRepository;
 import kr.ac.hansung.kjh.seatreservationapi.repository.TimeSlotRepository;
 import kr.ac.hansung.kjh.seatreservationapi.repository.TimeSlotSeatRepository;
+import kr.ac.hansung.kjh.seatreservationapi.repository.projection.SeatSummary;
+import kr.ac.hansung.kjh.seatreservationapi.repository.projection.TimeSlotSummary;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -52,17 +52,20 @@ public class FacilityService {
     LocalDateTime from = date.atStartOfDay();
     LocalDateTime to = date.plusDays(1).atStartOfDay();
 
-    Page<TimeSlotResponse> result = timeSlotRepository.findByFacilityIdAndLocalDate(
+    Page<TimeSlotSummary> result = timeSlotRepository.findByFacilityIdAndLocalDate(
         facilityId, from, to, pageable
     );
 
     return FacilityTimeSlotsResponse.from(result);
   }
 
-  public FacilitySeatsResponse findFacilitySeats(Long facilityId, int currentPage) {
+  public FacilitySeatsResponse findFacilitySeats(Long facilityId, long timeSlotId,
+      int currentPage) {
     Pageable pageable = PageRequest.of(currentPage, PAGE_SIZE,
         Sort.by(Direction.ASC, "rowLabel", "columnNo"));
-    Page<SeatEntity> result = seatRepository.findByFacilityId(facilityId, pageable);
+
+    Page<SeatSummary> result = seatRepository.findByFacilityIdAndTimeSlotId(facilityId, timeSlotId,
+        pageable);
 
     return FacilitySeatsResponse.from(result);
   }

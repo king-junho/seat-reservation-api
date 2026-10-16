@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import kr.ac.hansung.kjh.seatreservationapi.dto.request.SearchFacilityRequest;
+import kr.ac.hansung.kjh.seatreservationapi.dto.request.SearchSeatRequest;
 import kr.ac.hansung.kjh.seatreservationapi.dto.request.SearchTimeSlotRequest;
 import kr.ac.hansung.kjh.seatreservationapi.dto.response.FacilitySearchResponse;
 import kr.ac.hansung.kjh.seatreservationapi.dto.response.FacilitySeatsResponse;
@@ -15,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -47,8 +47,10 @@ public class FacilityController {
 
   @GetMapping("/{facilityId}/seats")
   public FacilitySeatsResponse searchSeats(@PathVariable Long facilityId,
-      @RequestParam(defaultValue = "0") int currentPage) {
+      @Valid SearchSeatRequest request) {
+    long timeSlotId = request.timeSlotId();
+    int currentPage = request.currentPage();
 
-    return facilityService.findFacilitySeats(facilityId, currentPage);
+    return facilityService.findFacilitySeats(facilityId, timeSlotId, currentPage);
   }
 }

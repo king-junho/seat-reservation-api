@@ -13,6 +13,6 @@ public class ReservationService {
     //그럼 controller에서 먼저 보내야 되는 곳은 RedisService로 먼저 보내고 RedisService에서 스케줄러 돌리고
     //스케줄러 돌려서 나온 값이 MQ로 reserve처리 하면 되는데
     //reserve 처리는 reserve 데이터 기록 남기고, 좌석 예매 처리 하고(점유 정보 업데이트)
-    
+
   }
 }

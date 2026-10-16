@@ -1,25 +1,25 @@
 package kr.ac.hansung.kjh.seatreservationapi.dto.response;
 
-import com.querydsl.core.annotations.QueryProjection;
 import java.time.LocalDateTime;
+import kr.ac.hansung.kjh.seatreservationapi.repository.projection.TimeSlotSummary;
 
 public record TimeSlotResponse(
     Long id,
     Long facilityId,
     LocalDateTime startTime,
     LocalDateTime endTime,
-    int totalSeats,
-    int availableSeats
+    long totalSeats,
+    long availableSeats
 ) {
 
-  @QueryProjection
-  public TimeSlotResponse(Long id, Long facilityId, LocalDateTime startTime, LocalDateTime endTime,
-      int totalSeats, int availableSeats) {
-    this.id = id;
-    this.facilityId = facilityId;
-    this.startTime = startTime;
-    this.endTime = endTime;
-    this.totalSeats = totalSeats;
-    this.availableSeats = availableSeats;
+  public static TimeSlotResponse from(TimeSlotSummary timeSlotSummary) {
+    return new TimeSlotResponse(
+        timeSlotSummary.id(),
+        timeSlotSummary.facilityId(),
+        timeSlotSummary.startTime(),
+        timeSlotSummary.endTime(),
+        timeSlotSummary.totalSeats(),
+        timeSlotSummary.availableSeats()
+    );
   }
 }

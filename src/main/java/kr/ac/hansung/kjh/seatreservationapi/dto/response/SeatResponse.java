@@ -1,20 +1,22 @@
 package kr.ac.hansung.kjh.seatreservationapi.dto.response;
 
-import kr.ac.hansung.kjh.seatreservationapi.entity.SeatEntity;
+import kr.ac.hansung.kjh.seatreservationapi.repository.projection.SeatSummary;
 
 public record SeatResponse(
     Long id,
     Long facilityId,
     String rowLabel,
-    int columnNo
+    Integer columnNo,
+    Boolean isReservation
 ) {
 
-  public static SeatResponse from(SeatEntity seat) {
+  public static SeatResponse from(SeatSummary seat) {
     return new SeatResponse(
-        seat.getId(),
-        seat.getFacilityId(),
-        seat.getRowLabel(),
-        seat.getColumnNo()
+        seat.id(),
+        seat.facilityId(),
+        seat.rowLabel(),
+        seat.columnNo(),
+        seat.isReservation()
     );
   }
 }

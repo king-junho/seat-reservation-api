@@ -27,6 +27,7 @@ public class AuthService {
     } catch (BadCredentialsException e) {
       throw new CustomException(ErrorCode.INVALID_CREDENTIALS);
     }
+    
     return jwtTokenService.createToken(authentication.getName());
   }
 }

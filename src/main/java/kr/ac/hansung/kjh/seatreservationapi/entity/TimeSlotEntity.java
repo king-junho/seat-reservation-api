@@ -37,10 +37,25 @@ public class TimeSlotEntity {
   @Column(name = "end_time", nullable = false)
   private LocalDateTime endTime;
 
+  
   @Builder
   private TimeSlotEntity(Long facilityId, LocalDateTime startTime, LocalDateTime endTime) {
+    if (facilityId == null || facilityId <= 0) {
+      throw new CustomException(
+          ErrorCode.INVALID_FACILITY_ID
+      );
+    }
+
+    if (startTime == null || endTime == null) {
+      throw new CustomException(
+          ErrorCode.REQUIRED_TIME_MISSING
+      );
+    }
+
     if (!startTime.isBefore(endTime)) {
-      throw new CustomException(ErrorCode.INVALID_TIME_RANGE);
+      throw new CustomException(
+          ErrorCode.INVALID_TIME_RANGE
+      );
     }
 
     this.facilityId = facilityId;

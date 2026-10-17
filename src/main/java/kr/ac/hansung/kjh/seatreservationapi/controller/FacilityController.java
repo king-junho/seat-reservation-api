@@ -14,6 +14,7 @@ import kr.ac.hansung.kjh.seatreservationapi.entity.Region;
 import kr.ac.hansung.kjh.seatreservationapi.service.FacilityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +28,8 @@ public class FacilityController {
 
   // 시설 검색
   @GetMapping("/search")
-  public FacilitySearchResponse searchFacilities(SearchFacilityRequest request) {
+  public FacilitySearchResponse searchFacilities(
+      @Valid @ModelAttribute SearchFacilityRequest request) {
     LocalDateTime dateTime = request.dateTime();
     Region region = request.region();
     FacilityType type = request.type();
@@ -38,7 +40,7 @@ public class FacilityController {
 
   @GetMapping("/{facilityId}/timeslots")
   public FacilityTimeSlotsResponse searchTimeSlots(@PathVariable Long facilityId,
-      @Valid SearchTimeSlotRequest request) {
+      @Valid @ModelAttribute SearchTimeSlotRequest request) {
     LocalDate date = request.date();
     int currentPage = request.currentPage();
 
@@ -47,7 +49,7 @@ public class FacilityController {
 
   @GetMapping("/{facilityId}/seats")
   public FacilitySeatsResponse searchSeats(@PathVariable Long facilityId,
-      @Valid SearchSeatRequest request) {
+      @Valid @ModelAttribute SearchSeatRequest request) {
     long timeSlotId = request.timeSlotId();
     int currentPage = request.currentPage();
 

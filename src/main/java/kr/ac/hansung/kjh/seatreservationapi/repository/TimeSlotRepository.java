@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface TimeSlotRepository extends CustomTimeSlotRepository,
     JpaRepository<TimeSlotEntity, Long> {
 
+  boolean existsByIdAndFacilityId(Long id, Long facilityId);
 }
